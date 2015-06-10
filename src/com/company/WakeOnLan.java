@@ -25,10 +25,18 @@ public class WakeOnLan {
         return ipBroadcast;
     }
 
-    public void setIpBroadcast(String ipBroadcast){
+    public void setIpBroadcast(String ipBroadcast)
+    {
         ipBroadcast = this.ipBroadcast;
     }
 
+
+    public byte crear (String macAddress){
+
+        byte[] mac = new byte [6];
+
+
+    }
 
     public static void main(String[] args) {
 
