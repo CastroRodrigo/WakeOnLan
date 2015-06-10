@@ -9,23 +9,32 @@ public class WakeOnLan {
     private String macDestino;
     private String ipBroadcast;
 
+    // Get de la mac destino
     public String getMacDestino(){
         return macDestino;
     }
 
-    public void setMacDestino(String macDestino){
+    // Set de la mac destino
+    public void setMacDestino(String macDestino)
+    {
         macDestino = this.macDestino;
     }
 
-    public int getPuerto(){
+    // get del puerto
+    public int getPuerto()
+    {
         return puerto;
     }
 
-    public String getIpBroadcast(){
+    // get de la ipdestino
+    public String getIpBroadcast()
+    {
         return ipBroadcast;
     }
 
+    // set de la ipdestino
     public void setIpBroadcast(String ipBroadcast)
+
     {
         ipBroadcast = this.ipBroadcast;
     }
