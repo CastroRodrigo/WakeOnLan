@@ -3,9 +3,10 @@ import java.io.*;
 import java.net.*;
 
 
+
 public class WakeOnLan {
 
-    private int puerto = 9;
+    public static final int puerto = 9;
     private String macDestino;
     private String ipBroadcast;
 
@@ -40,7 +41,7 @@ public class WakeOnLan {
     }
 
 
-    public byte[] macToBytes (String macAddress) throws IllegalArgumentException {
+    private static byte[] macToBytes (String macAddress) throws IllegalArgumentException {
 
         byte[] macInBytes = new byte[6];
         String[] macText = macAddress.split("-\\:"); // Corta los octetos de la MAC que esta en tipo String de a uno .
@@ -59,6 +60,35 @@ public class WakeOnLan {
 
 
     public static void main(String[] args) {
+
+        if(args.length !=2){
+            System.out.println("Usar: java WakeOnLan <broadcast-ip> <mac-address>");
+        }
+
+        String ipStr = args [0];
+        String macStr = args [1];
+
+        try{
+            byte[] byteMac = macToBytes (macStr);
+            byte[] bytes = new byte[6 + 16 * byteMac.length];
+            for (int i = 0; i < 6; i++){
+                bytes[i]= (byte) 0xff;
+            }
+            for (int i=6; i < bytes.length; i+= byteMac.length){
+                System.arraycopy(byteMac, 0, bytes, i, byteMac.length);
+            }
+            InetAddress address = InetAddress.getByName(ipStr);
+            DatagramPacket packet = new DatagramPacket(bytes, bytes.length, address, puerto);
+            DatagramSocket socket = new DatagramSocket();
+            socket.send(packet);
+            socket.close();
+
+            System.out.println("El magic packet fue enviado");
+        }
+        catch(Exception e){
+            System.out.println("Fallo el envio del magic packet: + e");
+            System.exit(1);
+        }
 
     }
 }
